@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>方寸有序工作室 | 软件售卖与个性化定制</title>
+    <meta
+      name="description"
+      content="方寸有序工作室提供图文店、印刷店、小工厂所需的软件售卖、流程自动化、PDF/Excel/标签排版工具和个性化软件定制。"
+    />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0f1111;
+        --panel: #171a1b;
+        --panel-strong: #1f2322;
+        --ink: #f4efe5;
+        --muted: #aeb5ad;
+        --line: #343a38;
+        --gold: #d8a84a;
+        --green: #48c78e;
+        --teal: #4fb7a4;
+        --red: #df6f5e;
+        --white-soft: #fff8ea;
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          "Microsoft YaHei UI",
+          "Microsoft YaHei",
+          "PingFang SC",
+          "Noto Sans CJK SC",
+          Arial,
+          sans-serif;
+        letter-spacing: 0;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background:
+          linear-gradient(rgba(216, 168, 74, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(216, 168, 74, 0.035) 1px, transparent 1px),
+          #0f1111;
+        background-size: 76px 76px;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        border-bottom: 1px solid rgba(255, 248, 234, 0.08);
+        background: rgba(15, 17, 17, 0.88);
+        backdrop-filter: blur(14px);
+      }
+
+      .nav {
+        width: min(1180px, calc(100% - 40px));
+        min-height: 66px;
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 210px;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        background: #161817;
+        font-weight: 900;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .nav-links a:hover {
+        color: var(--ink);
+      }
+
+      .icon-button,
+      .primary-button,
+      .ghost-button,
+      .tab-button,
+      .copy-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 42px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        color: var(--ink);
+        background: #181b1a;
+        transition:
+          border-color 160ms ease,
+          background 160ms ease,
+          transform 160ms ease;
+      }
+
+      .icon-button {
+        width: 42px;
+        padding: 0;
+      }
+
+      .primary-button {
+        padding: 0 18px;
+        border-color: var(--gold);
+        background: var(--gold);
+        color: #12100b;
+        font-weight: 800;
+      }
+
+      .ghost-button,
+      .copy-button {
+        padding: 0 16px;
+      }
+
+      .primary-button:hover,
+      .ghost-button:hover,
+      .icon-button:hover,
+      .copy-button:hover {
+        transform: translateY(-1px);
+      }
+
+      .ghost-button:hover,
+      .icon-button:hover,
+      .copy-button:hover {
+        border-color: var(--gold);
+      }
+
+      .contact-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .contact-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid rgba(216, 168, 74, 0.38);
+        border-radius: 8px;
+        background: rgba(216, 168, 74, 0.1);
+        color: var(--white-soft);
+        font-weight: 800;
+        font-family: Consolas, "Courier New", monospace;
+      }
+
+      .contact-link i {
+        width: 18px;
+        height: 18px;
+        color: var(--gold);
+      }
+
+      .contact-text {
+        display: grid;
+        gap: 2px;
+        line-height: 1.2;
+      }
+
+      .contact-role {
+        color: var(--muted);
+        font-family:
+          "Microsoft YaHei UI",
+          "Microsoft YaHei",
+          Arial,
+          sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .hero-contact {
+        margin-top: 18px;
+      }
+
+      .contact-card,
+      .form-contact {
+        border: 1px solid rgba(216, 168, 74, 0.32);
+        background: rgba(216, 168, 74, 0.08);
+      }
+
+      .contact-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 20px;
+        padding: 18px 20px;
+      }
+
+      .contact-card strong {
+        display: block;
+        font-size: 20px;
+      }
+
+      .contact-card span,
+      .form-contact span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .form-contact {
+        padding: 12px;
+        border-radius: 8px;
+      }
+
+      .form-contact .contact-strip {
+        margin-top: 10px;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 700px;
+        height: 78svh;
+        overflow: hidden;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-media {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background: url("assets/preview_montage.jpg") center / cover no-repeat;
+      }
+
+      .hero-media video,
+      .hero-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.36;
+      }
+
+      .hero-media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(15, 17, 17, 0.94), rgba(15, 17, 17, 0.58) 52%, rgba(15, 17, 17, 0.82)),
+          linear-gradient(0deg, rgba(15, 17, 17, 0.16), rgba(15, 17, 17, 0.44));
+      }
+
+      .hero-inner {
+        width: min(1180px, calc(100% - 40px));
+        height: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 74px 0 86px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border: 1px solid rgba(216, 168, 74, 0.5);
+        background: rgba(18, 20, 20, 0.72);
+        color: var(--gold);
+        font-size: 13px;
+        font-family: Consolas, "Courier New", monospace;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin-top: 26px;
+        font-size: 64px;
+        line-height: 1.08;
+        font-weight: 900;
+      }
+
+      .hero-copy {
+        max-width: 670px;
+        margin-top: 22px;
+        color: #ddd7ca;
+        font-size: 20px;
+        line-height: 1.7;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 34px;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: min(720px, 100%);
+        gap: 12px;
+        margin-top: 48px;
+      }
+
+      .stat {
+        min-height: 108px;
+        padding: 18px;
+        border: 1px solid rgba(255, 248, 234, 0.12);
+        background: rgba(23, 26, 27, 0.76);
+      }
+
+      .stat strong {
+        display: block;
+        color: var(--white-soft);
+        font-size: 28px;
+        line-height: 1.1;
+      }
+
+      .stat span {
+        display: block;
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      section {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-inner {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 82px 0;
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(280px, 0.55fr);
+        align-items: end;
+        gap: 40px;
+        margin-bottom: 34px;
+      }
+
+      .section-heading h2 {
+        margin-top: 14px;
+        font-size: 40px;
+        line-height: 1.18;
+      }
+
+      .section-heading p {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.75;
+      }
+
+      .product-visual {
+        display: grid;
+        grid-template-columns: minmax(0, 0.78fr) minmax(340px, 0.52fr);
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .workflow-board,
+      .function-panel,
+      .custom-window,
+      .roi-panel {
+        border: 1px solid var(--line);
+        background: rgba(23, 26, 27, 0.96);
+        box-shadow: var(--shadow);
+      }
+
+      .workflow-board {
+        min-height: 540px;
+        padding: 24px;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 22px;
+      }
+
+      .board-titlebar,
+      .window-titlebar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 42px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .status-dots {
+        display: flex;
+        gap: 8px;
+      }
+
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .status-dot:nth-child(1) {
+        background: var(--red);
+      }
+
+      .status-dot:nth-child(2) {
+        background: var(--gold);
+      }
+
+      .status-dot:nth-child(3) {
+        background: var(--green);
+      }
+
+      .module-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tab-button {
+        padding: 0 13px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .tab-button[aria-selected="true"] {
+        border-color: var(--gold);
+        background: rgba(216, 168, 74, 0.12);
+        color: var(--ink);
+      }
+
+      .process-map {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .process-step {
+        min-height: 164px;
+        padding: 18px;
+        border: 1px solid rgba(255, 248, 234, 0.1);
+        background: #121514;
+      }
+
+      .process-step .step-index {
+        color: var(--gold);
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 13px;
+      }
+
+      .process-step h3 {
+        margin-top: 16px;
+        font-size: 19px;
+      }
+
+      .process-step p {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .output-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .output-chip {
+        min-height: 70px;
+        padding: 14px;
+        border: 1px solid rgba(72, 199, 142, 0.24);
+        background: rgba(72, 199, 142, 0.08);
+      }
+
+      .output-chip strong {
+        display: block;
+        color: var(--green);
+        font-size: 16px;
+      }
+
+      .output-chip span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .function-panel {
+        padding: 22px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .asset-frame {
+        min-height: 220px;
+        border: 1px solid rgba(255, 248, 234, 0.11);
+        background: #101212;
+        overflow: hidden;
+      }
+
+      .asset-frame img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-height: 284px;
+        object-fit: contain;
+        background: #0b0d0d;
+      }
+
+      .feature-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .feature-line {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 10px;
+        align-items: start;
+        color: #d8d4c9;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .feature-line i {
+        width: 20px;
+        height: 20px;
+        color: var(--green);
+      }
+
+      .custom-band {
+        background:
+          linear-gradient(180deg, rgba(216, 168, 74, 0.06), rgba(15, 17, 17, 0)),
+          var(--bg);
+      }
+
+      .custom-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.58fr);
+        gap: 20px;
+        align-items: start;
+      }
+
+      .roi-panel {
+        padding: 24px;
+      }
+
+      .range-row {
+        display: grid;
+        grid-template-columns: 1fr 98px;
+        gap: 16px;
+        align-items: center;
+        margin-top: 18px;
+      }
+
+      .range-row label {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--gold);
+      }
+
+      .number-pill {
+        min-height: 38px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line);
+        background: #121514;
+        color: var(--gold);
+        font-family: Consolas, "Courier New", monospace;
+      }
+
+      .savings-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .saving {
+        padding: 18px;
+        min-height: 116px;
+        border: 1px solid rgba(255, 248, 234, 0.1);
+        background: #121514;
+      }
+
+      .saving strong {
+        display: block;
+        color: var(--green);
+        font-size: 26px;
+        line-height: 1.1;
+      }
+
+      .saving span {
+        display: block;
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .custom-window {
+        padding: 0;
+      }
+
+      .window-titlebar {
+        padding: 16px 18px;
+      }
+
+      .window-titlebar strong {
+        font-size: 16px;
+      }
+
+      .custom-form {
+        display: grid;
+        gap: 16px;
+        padding: 18px;
+      }
+
+      .field {
+        display: grid;
+        gap: 7px;
+      }
+
+      .field label,
+      .check-group > span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #101212;
+        color: var(--ink);
+        padding: 10px 12px;
+        outline: none;
+      }
+
+      .field textarea {
+        min-height: 96px;
+        resize: vertical;
+        line-height: 1.55;
+      }
+
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        border-color: var(--gold);
+      }
+
+      .custom-field {
+        margin-top: 8px;
+      }
+
+      .custom-field input::placeholder {
+        color: #707871;
+      }
+
+      .check-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .check-grid label {
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #101212;
+        color: #d8d4c9;
+        font-size: 13px;
+      }
+
+      .check-grid input {
+        accent-color: var(--gold);
+      }
+
+      .summary-box {
+        min-height: 126px;
+        padding: 14px;
+        border: 1px solid rgba(79, 183, 164, 0.28);
+        background: rgba(79, 183, 164, 0.08);
+        color: #dbe9e4;
+        font-size: 13px;
+        line-height: 1.65;
+        white-space: pre-wrap;
+      }
+
+      .form-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .software-grid,
+      .pricing-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .software-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .pricing-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-top: 16px;
+      }
+
+      .software-card,
+      .price-card,
+      .pricing-note {
+        border: 1px solid var(--line);
+        background: rgba(23, 26, 27, 0.94);
+      }
+
+      .software-card {
+        min-height: 250px;
+        padding: 22px;
+        display: grid;
+        align-content: space-between;
+        gap: 22px;
+      }
+
+      .software-kicker,
+      .price-kicker {
+        color: var(--gold);
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .software-card h3 {
+        margin-top: 12px;
+        font-size: 24px;
+        line-height: 1.25;
+      }
+
+      .software-card p,
+      .pricing-note {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .software-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .software-tags span {
+        min-height: 30px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 10px;
+        border: 1px solid rgba(79, 183, 164, 0.28);
+        border-radius: 999px;
+        background: rgba(79, 183, 164, 0.08);
+        color: #dbe9e4;
+        font-size: 12px;
+      }
+
+      .price-card {
+        min-height: 150px;
+        padding: 18px;
+      }
+
+      .price-card strong {
+        display: block;
+        margin-top: 12px;
+        color: var(--white-soft);
+        font-size: 28px;
+        line-height: 1.1;
+      }
+
+      .price-card span {
+        display: block;
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .pricing-note {
+        margin-top: 14px;
+        padding: 16px 18px;
+      }
+
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .service-card {
+        min-height: 210px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        background: rgba(23, 26, 27, 0.9);
+      }
+
+      .service-card i {
+        width: 28px;
+        height: 28px;
+        color: var(--gold);
+      }
+
+      .service-card h3 {
+        margin-top: 20px;
+        font-size: 20px;
+      }
+
+      .service-card p {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .footer {
+        padding: 42px 0;
+        background: #0b0d0d;
+      }
+
+      .footer-inner {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 22px;
+        background: rgba(0, 0, 0, 0.64);
+      }
+
+      .modal-backdrop.is-open {
+        display: flex;
+      }
+
+      .modal-window {
+        width: min(760px, 100%);
+        max-height: min(820px, calc(100svh - 44px));
+        overflow: auto;
+        border: 1px solid var(--line);
+        background: #151817;
+        box-shadow: var(--shadow);
+      }
+
+      .modal-window .custom-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .modal-window .field-wide,
+      .modal-window .check-group,
+      .modal-window .form-contact,
+      .modal-window .summary-box,
+      .modal-window .form-actions {
+        grid-column: 1 / -1;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (max-width: 920px) {
+        .nav-links {
+          display: none;
+        }
+
+        .hero {
+          min-height: 650px;
+          height: 78svh;
+        }
+
+        .hero-inner {
+          padding: 56px 0 64px;
+        }
+
+        h1 {
+          font-size: 44px;
+        }
+
+        .hero-copy {
+          font-size: 18px;
+        }
+
+        .hero-stats,
+        .section-heading,
+        .product-visual,
+        .custom-layout,
+        .software-grid,
+        .service-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .process-map,
+        .output-grid,
+        .pricing-grid,
+        .savings-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .section-inner {
+          padding: 60px 0;
+        }
+
+        .section-heading h2 {
+          font-size: 32px;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .nav,
+        .section-inner,
+        .hero-inner,
+        .footer-inner {
+          width: min(100% - 28px, 1180px);
+        }
+
+        .brand {
+          min-width: auto;
+        }
+
+        .brand span {
+          max-width: 154px;
+          line-height: 1.25;
+        }
+
+        .nav {
+          gap: 10px;
+        }
+
+        .nav .nav-request-button {
+          display: inline-grid;
+          place-items: center;
+          width: 44px;
+          min-height: 40px;
+          padding: 0;
+          font-size: 0;
+          margin-left: auto;
+          flex: 0 0 auto;
+          border-color: var(--gold);
+          background: var(--gold);
+          color: #12100b;
+          position: absolute;
+          top: 13px;
+          right: 0;
+        }
+
+        .nav .nav-request-button i {
+          width: 20px;
+          height: 20px;
+        }
+
+        .hero-actions,
+        .form-actions,
+        .footer-inner {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .hero-stats {
+          display: none;
+        }
+
+        .contact-card {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .contact-link {
+          width: 100%;
+        }
+
+        .primary-button,
+        .ghost-button,
+        .copy-button {
+          width: 100%;
+        }
+
+        .check-grid,
+        .modal-window .custom-form {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="主导航">
+        <a class="brand" href="#top" aria-label="方寸有序工作室首页">
+          <span class="brand-mark">方</span>
+          <span>方寸有序工作室</span>
+        </a>
+        <div class="nav-links" aria-label="页面区块">
+          <a href="#visual">软件功能</a>
+          <a href="#pricing">软件价格</a>
+          <a href="#custom">定制需求</a>
+          <a href="#services">服务范围</a>
+          <a href="#contact">联系方式</a>
+        </div>
+        <button class="primary-button nav-request-button" type="button" data-open-modal aria-label="打开定制需求窗口">
+          <i data-lucide="message-square-plus" aria-hidden="true"></i>
+          定制窗口
+        </button>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media" aria-hidden="true">
+          <video src="assets/launch-video.mp4" autoplay muted loop playsinline poster="assets/preview_montage.jpg"></video>
+        </div>
+        <div class="hero-inner">
+          <span class="eyebrow">SOFTWARE / CUSTOM / LOCAL DEPLOYMENT</span>
+          <h1 id="hero-title">方寸有序工作室</h1>
+          <p class="hero-copy">
+            面向图文店、印刷店、小工厂和重复办公流程，提供可直接售卖的软件产品，也承接按客户现场流程定制的本地化工具。把反复核算、表格整理、PDF 加工和标签拼版，沉淀成稳定的软件流程。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#visual">
+              <i data-lucide="layout-dashboard" aria-hidden="true"></i>
+              查看功能可视化
+            </a>
+            <button class="ghost-button" type="button" data-open-modal>
+              <i data-lucide="sliders-horizontal" aria-hidden="true"></i>
+              填写定制需求
+            </button>
+          </div>
+          <div class="contact-strip hero-contact" aria-label="联系电话">
+            <a class="contact-link" href="tel:18000696026">
+              <i data-lucide="phone" aria-hidden="true"></i>
+              <span class="contact-text"><span class="contact-role">技术提供</span>18000696026</span>
+            </a>
+            <a class="contact-link" href="tel:15033804093">
+              <i data-lucide="phone" aria-hidden="true"></i>
+              <span class="contact-text"><span class="contact-role">雄县本地线下对接</span>15033804093</span>
+            </a>
+          </div>
+          <div class="hero-stats" aria-label="核心价值">
+            <div class="stat">
+              <strong>PDF</strong>
+              <span>按页份数加工、审计表、批量输出</span>
+            </div>
+            <div class="stat">
+              <strong>Excel</strong>
+              <span>识别客户表格、归一化需求、自动复核</span>
+            </div>
+            <div class="stat">
+              <strong>标签</strong>
+              <span>拼版方案、成本明细、超印风险提示</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="visual" aria-labelledby="visual-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">FUNCTION VISUALIZATION</span>
+              <h2 id="visual-title">把客户资料变成可执行方案</h2>
+            </div>
+            <p>
+              网站中段用软件流程图说明真实能力：读取 Excel、CSV、PDF 和文字要求，按业务规则计算，再导出员工可执行、老板可复核的文件。
+            </p>
+          </div>
+
+          <div class="product-visual">
+            <div class="workflow-board" aria-label="软件功能流程可视化">
+              <div class="board-titlebar">
+                <div>
+                  <strong id="moduleTitle">标签印刷排版计划</strong>
+                  <p id="moduleSubtitle" style="margin-top: 6px; color: var(--muted); font-size: 13px">
+                    Excel 标签数量表进入软件后，自动计算推荐拼版方案。
+                  </p>
+                </div>
+                <div class="status-dots" aria-hidden="true">
+                  <span class="status-dot"></span>
+                  <span class="status-dot"></span>
+                  <span class="status-dot"></span>
+                </div>
+              </div>
+
+              <div class="module-tabs" role="tablist" aria-label="功能模块">
+                <button class="tab-button" type="button" role="tab" aria-selected="true" data-module="label">
+                  <i data-lucide="grid-3x3" aria-hidden="true"></i>
+                  标签拼版
+                </button>
+                <button class="tab-button" type="button" role="tab" aria-selected="false" data-module="pdf">
+                  <i data-lucide="file-stack" aria-hidden="true"></i>
+                  PDF 加工
+                </button>
+                <button class="tab-button" type="button" role="tab" aria-selected="false" data-module="license">
+                  <i data-lucide="shield-check" aria-hidden="true"></i>
+                  离线授权
+                </button>
+              </div>
+
+              <div class="process-map" id="processMap"></div>
+
+              <div class="output-grid" id="outputGrid"></div>
+            </div>
+
+            <aside class="function-panel" aria-label="真实软件视觉资产">
+              <div class="asset-frame">
+                <img src="assets/preview_montage.jpg" alt="方寸有序工作室短视频中的软件功能可视化画面" />
+              </div>
+              <div class="feature-list">
+                <div class="feature-line">
+                  <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                  <span>本地 Windows 软件，支持离线运行和离线授权，不依赖外网 API。</span>
+                </div>
+                <div class="feature-line">
+                  <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                  <span>员工按软件提示操作，老板看 Word / Excel 明细复核成本与风险。</span>
+                </div>
+                <div class="feature-line">
+                  <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                  <span>可按客户现场业务继续定制：字段、规则、输出格式、授权方式都可调整。</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" aria-labelledby="pricing-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">CURRENT SOFTWARE / PRICE</span>
+              <h2 id="pricing-title">现有两款软件与价格</h2>
+            </div>
+            <p>
+              这里仅做概要说明，展示能解决的业务方向，不展开具体算法、规则细节和内部实现。客户有真实样表或现场流程时，可以再进入演示和定制沟通。
+            </p>
+          </div>
+
+          <div class="software-grid" aria-label="现有软件概要">
+            <article class="software-card">
+              <div>
+                <div class="software-kicker">SOFTWARE 01 / PRINT SHOP SUITE</div>
+                <h3>打印店自动化工具套件</h3>
+                <p>
+                  面向图文店、打印店和日常批量文件处理场景，帮助员工把客户表格、PDF 文件和交付结果整理成更稳定的本地流程，减少重复核算和返工沟通。
+                </p>
+              </div>
+              <div class="software-tags">
+                <span>PDF 加工</span>
+                <span>表格读取</span>
+                <span>本地运行</span>
+              </div>
+            </article>
+
+            <article class="software-card">
+              <div>
+                <div class="software-kicker">SOFTWARE 02 / LABEL PLANNER</div>
+                <h3>标签印刷排版计划工具</h3>
+                <p>
+                  面向标签印刷和同尺寸多内容订单，辅助把客户数量表转成可复核的排版建议、成本方向和员工操作说明，核心目标是降低手算依赖。
+                </p>
+              </div>
+              <div class="software-tags">
+                <span>标签订单</span>
+                <span>成本复核</span>
+                <span>员工说明</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="pricing-grid" aria-label="软件价格">
+            <div class="price-card">
+              <div class="price-kicker">EXISTING / MONTHLY</div>
+              <strong>199 元/月</strong>
+              <span>使用现有软件，适合持续处理同类订单。</span>
+            </div>
+            <div class="price-card">
+              <div class="price-kicker">EXISTING / TRIAL</div>
+              <strong>19.9 元/小时</strong>
+              <span>一小时试用装，适合先用真实订单验证。</span>
+            </div>
+            <div class="price-card">
+              <div class="price-kicker">EXISTING / BUYOUT</div>
+              <strong>1999 元</strong>
+              <span>现有软件买断，适合长期固定使用。</span>
+            </div>
+            <div class="price-card">
+              <div class="price-kicker">CUSTOM / ORIGINAL</div>
+              <strong>499 元</strong>
+              <span>软件原创费。按需定制后，月租、试用、买断价格同现有软件。</span>
+            </div>
+          </div>
+
+          <div class="pricing-note">
+            按需定制可围绕客户自己的表格字段、业务规则、输出格式和部署方式调整。定制项目先收软件原创费 499 元；后续使用价格与现有软件相同：月租 199 元、一小时试用装 19.9 元、买断 1999 元。
+          </div>
+        </div>
+      </section>
+
+      <section id="custom" class="custom-band" aria-labelledby="custom-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">COST DOWN / EFFICIENCY UP</span>
+              <h2 id="custom-title">定制需求窗口：先把降本增效算清楚</h2>
+            </div>
+            <p>
+              客户最关心的不是“软件很智能”，而是能不能少手算、少返工、少依赖老员工。这里用一个小型估算器和需求窗口，把沟通前置。
+            </p>
+          </div>
+
+          <div class="contact-card" id="contact" aria-label="联系方式">
+            <div>
+              <strong>有现成流程或订单样表，直接电话沟通</strong>
+              <span>先判断是否适合现成软件，再确认是否需要个性化定制。</span>
+            </div>
+            <div class="contact-strip">
+              <a class="contact-link" href="tel:18000696026">
+                <i data-lucide="phone-call" aria-hidden="true"></i>
+                <span class="contact-text"><span class="contact-role">技术提供</span>18000696026</span>
+              </a>
+              <a class="contact-link" href="tel:15033804093">
+                <i data-lucide="phone-call" aria-hidden="true"></i>
+                <span class="contact-text"><span class="contact-role">雄县本地线下对接</span>15033804093</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="custom-layout">
+            <div class="roi-panel" aria-label="降本增效估算器">
+              <span class="eyebrow">ROI ESTIMATOR</span>
+              <h3 style="margin-top: 16px; font-size: 28px">重复订单节省估算</h3>
+              <p style="margin-top: 12px; color: var(--muted); line-height: 1.7">
+                调整下面两个参数，快速展示软件把人工核算流程固化后的节省空间。数值用于沟通方向，不作为最终报价。
+              </p>
+
+              <div class="range-row">
+                <div>
+                  <label for="ordersRange">每周重复订单数量</label>
+                  <input id="ordersRange" type="range" min="5" max="120" value="35" />
+                </div>
+                <div class="number-pill"><span id="ordersValue">35</span> 单</div>
+              </div>
+              <div class="range-row">
+                <div>
+                  <label for="minutesRange">每单人工核算时间</label>
+                  <input id="minutesRange" type="range" min="5" max="90" value="25" />
+                </div>
+                <div class="number-pill"><span id="minutesValue">25</span> 分</div>
+              </div>
+
+              <div class="savings-grid">
+                <div class="saving">
+                  <strong id="weekHours">14.6h</strong>
+                  <span>每周可释放的人工核算时间</span>
+                </div>
+                <div class="saving">
+                  <strong id="monthHours">58h</strong>
+                  <span>按 4 周估算的月度节省</span>
+                </div>
+                <div class="saving">
+                  <strong id="processScore">高</strong>
+                  <span>适合定制软件固化规则的优先级</span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="custom-window" aria-label="客户定制需求窗口">
+              <div class="window-titlebar">
+                <strong>客户定制需求窗口</strong>
+                <button class="icon-button" type="button" data-open-modal aria-label="放大填写需求">
+                  <i data-lucide="maximize-2" aria-hidden="true"></i>
+                </button>
+              </div>
+              <form class="custom-form" id="inlineForm">
+                <div class="form-contact">
+                  <strong>联系电话</strong>
+                  <span>软件售卖、流程定制、部署交付都可先电话沟通。</span>
+                  <div class="contact-strip">
+                    <a class="contact-link" href="tel:18000696026">
+                      <i data-lucide="phone" aria-hidden="true"></i>
+                      <span class="contact-text"><span class="contact-role">技术提供</span>18000696026</span>
+                    </a>
+                    <a class="contact-link" href="tel:15033804093">
+                      <i data-lucide="phone" aria-hidden="true"></i>
+                      <span class="contact-text"><span class="contact-role">雄县本地线下对接</span>15033804093</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="inlineIndustry">行业场景</label>
+                  <select id="inlineIndustry" name="industry">
+                    <option>图文店 / 打印店</option>
+                    <option>标签印刷店</option>
+                    <option>小工厂订单处理</option>
+                    <option>办公室批量流程</option>
+                  </select>
+                  <input
+                    type="text"
+                    name="customIndustry"
+                    aria-label="自定义行业场景"
+                    placeholder="其他行业或现场流程，可直接填写"
+                  />
+                </div>
+                <div class="field">
+                  <label for="inlineOutput">希望输出</label>
+                  <select id="inlineOutput" name="output">
+                    <option>Word 说明 + Excel 明细</option>
+                    <option>加工后的 PDF 文件</option>
+                    <option>本地 EXE 软件</option>
+                    <option>定制管理小工具</option>
+                  </select>
+                  <input
+                    type="text"
+                    name="customOutput"
+                    aria-label="自定义希望输出"
+                    placeholder="其他输出，例如报价单、二维码标签、数据库导出"
+                  />
+                </div>
+                <div class="check-group">
+                  <span>当前最想解决的问题</span>
+                  <div class="check-grid">
+                    <label><input type="checkbox" name="pain" value="重复手算" checked />重复手算</label>
+                    <label><input type="checkbox" name="pain" value="表格整理" checked />表格整理</label>
+                    <label><input type="checkbox" name="pain" value="PDF 加工" />PDF 加工</label>
+                    <label><input type="checkbox" name="pain" value="员工照单执行" />员工照单执行</label>
+                  </div>
+                  <div class="field custom-field">
+                    <label for="inlineCustomPain">其他痛点或特殊流程</label>
+                    <input
+                      id="inlineCustomPain"
+                      type="text"
+                      name="customPain"
+                      placeholder="例如：报价规则复杂、客户文件命名混乱、需要自动生成对账表"
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="inlineNotes">需求描述</label>
+                  <textarea id="inlineNotes" name="notes">客户数量少、品种多，希望减少人工核算和返工。</textarea>
+                </div>
+                <div class="summary-box" id="inlineSummary" aria-live="polite"></div>
+                <div class="form-actions">
+                  <button class="primary-button" type="button" data-generate="inline">
+                    <i data-lucide="wand-sparkles" aria-hidden="true"></i>
+                    生成需求摘要
+                  </button>
+                  <button class="copy-button" type="button" data-copy="inline">
+                    <i data-lucide="copy" aria-hidden="true"></i>
+                    复制摘要
+                  </button>
+                </div>
+              </form>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" aria-labelledby="services-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">SERVICE SCOPE</span>
+              <h2 id="services-title">可售卖软件 + 专属流程定制</h2>
+            </div>
+            <p>
+              先卖已经成型的行业工具，再根据客户现场流程扩展。适合从一个明确痛点切入，逐步沉淀成稳定产品。
+            </p>
+          </div>
+
+          <div class="service-grid">
+            <div class="service-card">
+              <i data-lucide="file-input" aria-hidden="true"></i>
+              <h3>客户资料读取</h3>
+              <p>识别 Excel、CSV、文字说明和 PDF 需求，减少人工复制粘贴与错填。</p>
+            </div>
+            <div class="service-card">
+              <i data-lucide="workflow" aria-hidden="true"></i>
+              <h3>业务规则固化</h3>
+              <p>把纸张位置、机器费用、冗余量、冲突策略变成软件可执行规则。</p>
+            </div>
+            <div class="service-card">
+              <i data-lucide="file-output" aria-hidden="true"></i>
+              <h3>交付文件生成</h3>
+              <p>自动导出 Word 排版说明、Excel 计算明细、加工后 PDF 或本地 EXE。</p>
+            </div>
+            <div class="service-card">
+              <i data-lucide="badge-check" aria-hidden="true"></i>
+              <h3>本地授权交付</h3>
+              <p>支持离线运行、机器码激活、试用码和正式授权，方便软件售卖。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="brand">
+          <span class="brand-mark">方</span>
+          <span>方寸有序工作室</span>
+        </div>
+        <div class="contact-strip" aria-label="页脚联系电话">
+          <a class="contact-link" href="tel:18000696026">
+            <i data-lucide="phone" aria-hidden="true"></i>
+            <span class="contact-text"><span class="contact-role">技术提供</span>18000696026</span>
+          </a>
+          <a class="contact-link" href="tel:15033804093">
+            <i data-lucide="phone" aria-hidden="true"></i>
+            <span class="contact-text"><span class="contact-role">雄县本地线下对接</span>15033804093</span>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="requestModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-window">
+        <div class="window-titlebar">
+          <strong id="modalTitle">填写客户定制需求</strong>
+          <button class="icon-button" type="button" data-close-modal aria-label="关闭窗口">
+            <i data-lucide="x" aria-hidden="true"></i>
+          </button>
+        </div>
+        <form class="custom-form" id="modalForm">
+          <div class="form-contact">
+            <strong>联系电话</strong>
+            <span>也可以直接电话沟通需求和报价方向。</span>
+            <div class="contact-strip">
+              <a class="contact-link" href="tel:18000696026">
+                <i data-lucide="phone" aria-hidden="true"></i>
+                <span class="contact-text"><span class="contact-role">技术提供</span>18000696026</span>
+              </a>
+              <a class="contact-link" href="tel:15033804093">
+                <i data-lucide="phone" aria-hidden="true"></i>
+                <span class="contact-text"><span class="contact-role">雄县本地线下对接</span>15033804093</span>
+              </a>
+            </div>
+          </div>
+          <div class="field">
+            <label for="modalIndustry">行业场景</label>
+            <select id="modalIndustry" name="industry">
+              <option>图文店 / 打印店</option>
+              <option>标签印刷店</option>
+              <option>小工厂订单处理</option>
+              <option>办公室批量流程</option>
+            </select>
+            <input
+              type="text"
+              name="customIndustry"
+              aria-label="自定义行业场景"
+              placeholder="其他行业或现场流程，可直接填写"
+            />
+          </div>
+          <div class="field">
+            <label for="modalOutput">希望输出</label>
+            <select id="modalOutput" name="output">
+              <option>Word 说明 + Excel 明细</option>
+              <option>加工后的 PDF 文件</option>
+              <option>本地 EXE 软件</option>
+              <option>定制管理小工具</option>
+            </select>
+            <input
+              type="text"
+              name="customOutput"
+              aria-label="自定义希望输出"
+              placeholder="其他输出，例如报价单、二维码标签、数据库导出"
+            />
+          </div>
+          <div class="field">
+            <label for="modalDeploy">部署方式</label>
+            <select id="modalDeploy" name="deploy">
+              <option>本地电脑离线运行</option>
+              <option>局域网共享使用</option>
+              <option>单机授权售卖</option>
+              <option>后续再评估</option>
+            </select>
+            <input
+              type="text"
+              name="customDeploy"
+              aria-label="自定义部署方式"
+              placeholder="其他部署方式，例如多门店同步、指定电脑使用"
+            />
+          </div>
+          <div class="field">
+            <label for="modalUrgency">上线节奏</label>
+            <select id="modalUrgency" name="urgency">
+              <option>先做可用版本</option>
+              <option>需要完整交付包装</option>
+              <option>先评估流程</option>
+            </select>
+            <input
+              type="text"
+              name="customUrgency"
+              aria-label="自定义上线节奏"
+              placeholder="其他节奏，例如本周先演示、月底前上线"
+            />
+          </div>
+          <div class="check-group">
+            <span>当前最想解决的问题</span>
+            <div class="check-grid">
+              <label><input type="checkbox" name="pain" value="重复手算" checked />重复手算</label>
+              <label><input type="checkbox" name="pain" value="表格整理" checked />表格整理</label>
+              <label><input type="checkbox" name="pain" value="PDF 加工" />PDF 加工</label>
+              <label><input type="checkbox" name="pain" value="员工照单执行" />员工照单执行</label>
+              <label><input type="checkbox" name="pain" value="成本核算" />成本核算</label>
+              <label><input type="checkbox" name="pain" value="离线授权" />离线授权</label>
+            </div>
+            <div class="field custom-field">
+              <label for="modalCustomPain">其他痛点或特殊流程</label>
+              <input
+                id="modalCustomPain"
+                type="text"
+                name="customPain"
+                placeholder="例如：报价规则复杂、客户文件命名混乱、需要自动生成对账表"
+              />
+            </div>
+          </div>
+          <div class="field field-wide">
+            <label for="modalNotes">需求描述</label>
+            <textarea id="modalNotes" name="notes">客户数量少、品种多，希望减少人工核算和返工。</textarea>
+          </div>
+          <div class="summary-box" id="modalSummary" aria-live="polite"></div>
+          <div class="form-actions">
+            <button class="primary-button" type="button" data-generate="modal">
+              <i data-lucide="wand-sparkles" aria-hidden="true"></i>
+              生成需求摘要
+            </button>
+            <button class="copy-button" type="button" data-copy="modal">
+              <i data-lucide="copy" aria-hidden="true"></i>
+              复制摘要
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const moduleData = {
+        label: {
+          title: "标签印刷排版计划",
+          subtitle: "Excel 标签数量表进入软件后，自动计算推荐拼版方案。",
+          steps: [
+            ["读取 Excel", "识别标签编号、标签名称、SKU、数量和需求数量。"],
+            ["计算拼版", "按每张纸可排数量、行列、冗余量和空位策略生成版面。"],
+            ["复核成本", "输出逐版机器费、纸张成本、超印风险和排版说明。"],
+          ],
+          outputs: [
+            ["Word", "排版说明"],
+            ["Excel", "成本明细"],
+            ["方案", "员工照单执行"],
+          ],
+        },
+        pdf: {
+          title: "PDF 按页份数加工",
+          subtitle: "根据客户页码和份数要求，生成加工后的 PDF 与审计表。",
+          steps: [
+            ["解析要求", "从 Excel、CSV 或文字中识别页码范围、份数和默认规则。"],
+            ["处理冲突", "按策略处理重复页码、未指定页和多打印百分比。"],
+            ["批量输出", "生成规范化 Excel、审计表和加工后的 PDF 文件。"],
+          ],
+          outputs: [
+            ["PDF", "加工文件"],
+            ["Excel", "审计清单"],
+            ["日志", "处理记录"],
+          ],
+        },
+        license: {
+          title: "离线授权与本地部署",
+          subtitle: "支持软件售卖场景，不需要客户电脑联网即可激活。",
+          steps: [
+            ["获取机器码", "客户首次启动软件，复制本机机器码给管理员。"],
+            ["生成激活码", "按 1h、7d、30d、365d 或永久授权生成绑定码。"],
+            ["本地运行", "激活码绑定客户电脑，便于试用、交付和售后管理。"],
+          ],
+          outputs: [
+            ["EXE", "本地软件"],
+            ["授权", "试用/正式"],
+            ["售后", "可追踪交付"],
+          ],
+        },
+      };
+
+      const processMap = document.getElementById("processMap");
+      const outputGrid = document.getElementById("outputGrid");
+      const moduleTitle = document.getElementById("moduleTitle");
+      const moduleSubtitle = document.getElementById("moduleSubtitle");
+
+      function renderModule(key) {
+        const item = moduleData[key];
+        moduleTitle.textContent = item.title;
+        moduleSubtitle.textContent = item.subtitle;
+        processMap.innerHTML = item.steps
+          .map(
+            ([title, copy], index) => `
+              <article class="process-step">
+                <span class="step-index">0${index + 1} / STEP</span>
+                <h3>${title}</h3>
+                <p>${copy}</p>
+              </article>
+            `,
+          )
+          .join("");
+        outputGrid.innerHTML = item.outputs
+          .map(
+            ([name, copy]) => `
+              <div class="output-chip">
+                <strong>${name}</strong>
+                <span>${copy}</span>
+              </div>
+            `,
+          )
+          .join("");
+      }
+
+      document.querySelectorAll("[data-module]").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll("[data-module]").forEach((item) => item.setAttribute("aria-selected", "false"));
+          button.setAttribute("aria-selected", "true");
+          renderModule(button.dataset.module);
+        });
+      });
+
+      const ordersRange = document.getElementById("ordersRange");
+      const minutesRange = document.getElementById("minutesRange");
+      const ordersValue = document.getElementById("ordersValue");
+      const minutesValue = document.getElementById("minutesValue");
+      const weekHours = document.getElementById("weekHours");
+      const monthHours = document.getElementById("monthHours");
+      const processScore = document.getElementById("processScore");
+
+      function updateSavings() {
+        const orders = Number(ordersRange.value);
+        const minutes = Number(minutesRange.value);
+        const weekly = (orders * minutes) / 60;
+        ordersValue.textContent = String(orders);
+        minutesValue.textContent = String(minutes);
+        weekHours.textContent = `${weekly.toFixed(1)}h`;
+        monthHours.textContent = `${Math.round(weekly * 4)}h`;
+        processScore.textContent = weekly >= 45 ? "很高" : weekly >= 18 ? "高" : "中";
+      }
+
+      [ordersRange, minutesRange].forEach((input) => input.addEventListener("input", updateSavings));
+
+      function collectSummary(form) {
+        const data = new FormData(form);
+        const fieldWithCustom = (fieldName, customName, fallback) => {
+          const selected = (data.get(fieldName) || fallback || "未选择").toString().trim();
+          const custom = (data.get(customName) || "").toString().trim();
+          return custom ? `${selected}；自定义：${custom}` : selected;
+        };
+        const industry = fieldWithCustom("industry", "customIndustry", "未选择");
+        const output = fieldWithCustom("output", "customOutput", "未选择");
+        const deploy = fieldWithCustom("deploy", "customDeploy", "本地电脑离线运行");
+        const urgency = fieldWithCustom("urgency", "customUrgency", "先做可用版本");
+        const pains = data.getAll("pain");
+        const customPain = (data.get("customPain") || "").toString().trim();
+        if (customPain) {
+          pains.push(`自定义：${customPain}`);
+        }
+        const notes = (data.get("notes") || "未填写").toString().trim();
+        const contact = "技术提供：18000696026；雄县本地线下对接：15033804093";
+        return [
+          `行业场景：${industry}`,
+          `核心痛点：${pains.length ? pains.join("、") : "待确认"}`,
+          `期望输出：${output}`,
+          `部署方式：${deploy}`,
+          `交付节奏：${urgency}`,
+          `联系方式：${contact}`,
+          `需求描述：${notes}`,
+          "",
+          "初步建议：先梳理客户输入表格、人工判断规则和最终交付文件，再做一个可运行的本地工具版本，用真实订单验证节省时间和返工率。",
+        ].join("\n");
+      }
+
+      function generateSummary(scope) {
+        const form = document.getElementById(scope === "modal" ? "modalForm" : "inlineForm");
+        const target = document.getElementById(scope === "modal" ? "modalSummary" : "inlineSummary");
+        target.textContent = collectSummary(form);
+      }
+
+      document.querySelectorAll("[data-generate]").forEach((button) => {
+        button.addEventListener("click", () => generateSummary(button.dataset.generate));
+      });
+
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const scope = button.dataset.copy;
+          const target = document.getElementById(scope === "modal" ? "modalSummary" : "inlineSummary");
+          if (!target.textContent.trim()) {
+            generateSummary(scope);
+          }
+          try {
+            await navigator.clipboard.writeText(target.textContent);
+            button.innerHTML = '<i data-lucide="check" aria-hidden="true"></i>已复制';
+            lucide.createIcons();
+            setTimeout(() => {
+              button.innerHTML = '<i data-lucide="copy" aria-hidden="true"></i>复制摘要';
+              lucide.createIcons();
+            }, 1400);
+          } catch {
+            target.textContent += "\n\n复制失败：请手动选中上方摘要复制。";
+          }
+        });
+      });
+
+      const modal = document.getElementById("requestModal");
+      const openButtons = document.querySelectorAll("[data-open-modal]");
+      const closeButton = document.querySelector("[data-close-modal]");
+
+      function openModal() {
+        modal.classList.add("is-open");
+        generateSummary("modal");
+        closeButton.focus();
+      }
+
+      function closeModal() {
+        modal.classList.remove("is-open");
+      }
+
+      openButtons.forEach((button) => button.addEventListener("click", openModal));
+      closeButton.addEventListener("click", closeModal);
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) closeModal();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && modal.classList.contains("is-open")) closeModal();
+      });
+
+      renderModule("label");
+      updateSavings();
+      generateSummary("inline");
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    </script>
+  </body>
+</html>
