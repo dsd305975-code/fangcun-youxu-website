@@ -549,23 +549,80 @@
       .function-panel {
         padding: 22px;
         display: grid;
+        align-content: start;
         gap: 18px;
       }
 
-      .asset-frame {
-        min-height: 220px;
-        border: 1px solid rgba(255, 248, 234, 0.11);
-        background: #101212;
-        overflow: hidden;
+      .capability-matrix {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
       }
 
-      .asset-frame img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        max-height: 284px;
-        object-fit: contain;
-        background: #0b0d0d;
+      .capability-card {
+        min-height: 132px;
+        padding: 16px;
+        display: grid;
+        align-content: space-between;
+        gap: 14px;
+        border: 1px solid rgba(255, 248, 234, 0.11);
+        background:
+          linear-gradient(180deg, rgba(255, 248, 234, 0.035), rgba(255, 248, 234, 0)),
+          #101212;
+      }
+
+      .capability-card header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .capability-card i {
+        width: 20px;
+        height: 20px;
+        color: var(--gold);
+      }
+
+      .capability-card strong {
+        font-size: 15px;
+        line-height: 1.35;
+      }
+
+      .capability-card span {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .capability-flow {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        padding: 12px;
+        border: 1px solid rgba(72, 199, 142, 0.22);
+        background: rgba(72, 199, 142, 0.07);
+      }
+
+      .flow-node {
+        min-height: 70px;
+        padding: 10px;
+        display: grid;
+        align-content: center;
+        gap: 6px;
+        border: 1px solid rgba(72, 199, 142, 0.18);
+        background: rgba(11, 13, 13, 0.62);
+      }
+
+      .flow-node span {
+        color: var(--green);
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .flow-node strong {
+        font-size: 13px;
+        line-height: 1.35;
       }
 
       .feature-list {
@@ -661,6 +718,92 @@
         color: var(--muted);
         font-size: 13px;
         line-height: 1.45;
+      }
+
+      .custom-workflow {
+        margin-top: 22px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .custom-workflow-title,
+      .delivery-title {
+        color: var(--gold);
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+
+      .custom-flow-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .workflow-item {
+        min-height: 122px;
+        padding: 14px;
+        display: grid;
+        gap: 12px;
+        border: 1px solid rgba(255, 248, 234, 0.1);
+        background: #101212;
+      }
+
+      .workflow-item i {
+        width: 21px;
+        height: 21px;
+        color: var(--gold);
+      }
+
+      .workflow-item strong {
+        display: block;
+        font-size: 15px;
+      }
+
+      .workflow-item span {
+        display: block;
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .delivery-checklist {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .delivery-item {
+        min-height: 74px;
+        padding: 13px 14px;
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: 10px;
+        align-items: start;
+        border: 1px solid rgba(79, 183, 164, 0.24);
+        background: rgba(79, 183, 164, 0.07);
+      }
+
+      .delivery-item i {
+        width: 20px;
+        height: 20px;
+        color: var(--green);
+      }
+
+      .delivery-item strong {
+        display: block;
+        font-size: 14px;
+      }
+
+      .delivery-item span {
+        display: block;
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.5;
       }
 
       .custom-window {
@@ -1281,7 +1424,8 @@
         .process-map,
         .output-grid,
         .pricing-grid,
-        .savings-grid {
+        .savings-grid,
+        .capability-flow {
           grid-template-columns: 1fr;
         }
 
@@ -1364,6 +1508,10 @@
         }
 
         .check-grid,
+        .capability-matrix,
+        .capability-flow,
+        .custom-flow-grid,
+        .delivery-checklist,
         .modal-window .custom-form {
           grid-template-columns: 1fr;
         }
@@ -1489,7 +1637,7 @@
               <h2 id="visual-title">把客户资料变成可执行方案</h2>
             </div>
             <p>
-              网站中段用软件流程图说明真实能力：读取 Excel、CSV、PDF 和文字要求，按业务规则计算，再导出员工可执行、老板可复核的文件。
+              把客户的 Excel、CSV、PDF 和文字要求整理成统一流程，再按业务规则计算，最后导出员工可执行、老板可复核的交付文件。
             </p>
           </div>
 
@@ -1529,10 +1677,57 @@
               <div class="output-grid" id="outputGrid"></div>
             </div>
 
-            <aside class="function-panel" aria-label="真实软件视觉资产">
-              <div class="asset-frame">
-                <img src="assets/preview_montage.jpg" alt="方寸有序工作室短视频中的软件功能可视化画面" />
+            <aside class="function-panel" aria-label="软件能力矩阵">
+              <div class="capability-matrix">
+                <article class="capability-card" data-capability="input">
+                  <header>
+                    <i data-lucide="file-input" aria-hidden="true"></i>
+                    <strong>资料接入</strong>
+                  </header>
+                  <span>读取客户表格、PDF、文字备注和订单字段，先把零散资料归到同一套流程里。</span>
+                </article>
+                <article class="capability-card" data-capability="rules">
+                  <header>
+                    <i data-lucide="calculator" aria-hidden="true"></i>
+                    <strong>规则计算</strong>
+                  </header>
+                  <span>把人工反复判断的核算口径固化到软件里，减少手算、漏算和重复沟通。</span>
+                </article>
+                <article class="capability-card" data-capability="review">
+                  <header>
+                    <i data-lucide="shield-check" aria-hidden="true"></i>
+                    <strong>复核提醒</strong>
+                  </header>
+                  <span>对数量、规格、输出项和异常情况做提示，方便老板快速检查结果。</span>
+                </article>
+                <article class="capability-card" data-capability="delivery">
+                  <header>
+                    <i data-lucide="file-output" aria-hidden="true"></i>
+                    <strong>文件交付</strong>
+                  </header>
+                  <span>按客户现场需要导出 Word 说明、Excel 明细、PDF 文件或二维码标签等结果。</span>
+                </article>
               </div>
+
+              <div class="capability-flow" aria-label="资料到交付流程">
+                <div class="flow-node">
+                  <span>01 / INPUT</span>
+                  <strong>收集样表</strong>
+                </div>
+                <div class="flow-node">
+                  <span>02 / RULE</span>
+                  <strong>梳理规则</strong>
+                </div>
+                <div class="flow-node">
+                  <span>03 / CHECK</span>
+                  <strong>复核异常</strong>
+                </div>
+                <div class="flow-node">
+                  <span>04 / OUTPUT</span>
+                  <strong>稳定导出</strong>
+                </div>
+              </div>
+
               <div class="feature-list">
                 <div class="feature-line">
                   <i data-lucide="check-circle-2" aria-hidden="true"></i>
@@ -1689,6 +1884,72 @@
                 <div class="saving">
                   <strong id="processScore">高</strong>
                   <span>适合定制软件固化规则的优先级</span>
+                </div>
+              </div>
+
+              <div class="custom-workflow" aria-label="定制需求流转">
+                <span class="custom-workflow-title">CUSTOM DELIVERY FLOW</span>
+                <div class="custom-flow-grid">
+                  <article class="workflow-item">
+                    <i data-lucide="table-properties" aria-hidden="true"></i>
+                    <div>
+                      <strong>看样表</strong>
+                      <span>先确认客户现有表格、文件和人工判断步骤。</span>
+                    </div>
+                  </article>
+                  <article class="workflow-item">
+                    <i data-lucide="route" aria-hidden="true"></i>
+                    <div>
+                      <strong>定规则</strong>
+                      <span>梳理哪些步骤能自动算，哪些必须保留人工复核。</span>
+                    </div>
+                  </article>
+                  <article class="workflow-item">
+                    <i data-lucide="monitor-check" aria-hidden="true"></i>
+                    <div>
+                      <strong>出试用</strong>
+                      <span>先做可运行版本，用真实订单验证流程是否顺手。</span>
+                    </div>
+                  </article>
+                  <article class="workflow-item">
+                    <i data-lucide="package-check" aria-hidden="true"></i>
+                    <div>
+                      <strong>交付部署</strong>
+                      <span>本地电脑离线运行，按使用周期和售后方式交付。</span>
+                    </div>
+                  </article>
+                </div>
+
+                <span class="delivery-title">DELIVERABLES</span>
+                <div class="delivery-checklist">
+                  <div class="delivery-item">
+                    <i data-lucide="file-check-2" aria-hidden="true"></i>
+                    <div>
+                      <strong>可执行软件</strong>
+                      <span>本地运行，不依赖主机状态。</span>
+                    </div>
+                  </div>
+                  <div class="delivery-item">
+                    <i data-lucide="list-checks" aria-hidden="true"></i>
+                    <div>
+                      <strong>复核明细</strong>
+                      <span>让老板能看懂计算依据。</span>
+                    </div>
+                  </div>
+                  <div class="delivery-item">
+                    <i data-lucide="badge-check" aria-hidden="true"></i>
+                    <div>
+                      <strong>授权方式</strong>
+                      <span>支持试用、月租和包年。</span>
+                    </div>
+                  </div>
+                  <div class="delivery-item">
+                    <i data-lucide="phone-call" aria-hidden="true"></i>
+                    <div>
+                      <strong>本地对接</strong>
+                      <span>雄县客户可线下沟通。</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
